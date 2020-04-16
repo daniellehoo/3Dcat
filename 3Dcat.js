@@ -49,35 +49,34 @@ class Particle {
 class Cat {
   constructor (x, y, model) {
     this.position = createVector(x, y)
-    // this.position = (x, y)
-    // this.velocity = createVector(randomGaussian(0, 5), 0)
+    this.velocity = createVector(randomGaussian(0, 5), 0)
     this.model = model
   }
-//   update () {
-//     this.position.add(this.velocity)
-//     if (this.position.y > windowHeight - 5) {
-//       if (this.velocity.y > 5) {
-//         this.velocity.y *= -0.5;
-//         this.velocity.x *= 0.5;
-//       } else {
-//         this.velocity.x = 0;
-//       }
-//       this.position.y = windowHeight - 5;
-//     } else {
-//       this.velocity.add(createVector(0, 1));
-//     }
-//   }
+  update () {
+    this.position.add(this.velocity)
+    if (this.position.y > windowHeight - 5) {
+      if (this.velocity.y > 5) {
+        this.velocity.y *= -0.5
+        this.velocity.x *= 0.5
+      } else {
+        this.velocity.x = 0
+      }
+      this.position.y = windowHeight - 5
+    } else {
+      this.velocity.add(createVector(0, 1))
+    }
+  }
 
   render () {
-    // console.log(this.model)
     normalMaterial() // For effect
     // rotateX(sin(frameCount * 0.01))
     // rotateY(tan(frameCount * 0.01))
+    push()
+    rotate(180)
     translate(mouseX, mouseY)
     model(this.model)
-  // rotateZ(frameCount * 0.01)
-
-
+    pop()
+    // rotateZ(frameCount * 0.01)
   }
 }
 
@@ -88,6 +87,7 @@ function preload () {
 
 function setup () {
   createCanvas(windowWidth, windowHeight, WEBGL)
+  angleMode(DEGREES)
   for (let i = 0; i < width / 10; i++) {
     particles.push(new Particle())
   }
@@ -113,28 +113,30 @@ function draw () {
   // }
 
   for (cat of cats) {
-    // cat.update();
-    cat.render();
+    cat.update()
+    cat.render()
   }
 
-    // rotateX(frameCount * 0.01)
-    // rotateY(frameCount * 0.01)
-    // // rotateZ(frameCount * 0.01)
-    // normalMaterial() // For effect
-    // push()
-    // translate(-275, 175)
-    // model(luckyCat)
-    // pop()
-    // model(lotus)
+  // rotateX(frameCount * 0.01)
+  // rotateY(frameCount * 0.01)
+  // // rotateZ(frameCount * 0.01)
+  // normalMaterial() // For effect
+  // push()
+  // translate(-275, 175)
+  // model(luckyCat)
+  // pop()
+  // model(lotus)
 }
 
 function mouseClicked () {
+  // rotate(PI / 3.0)
+
   cats.push(new Cat(mouseX, mouseY, randomModel()))
-//   console.log(Cat)
+  //   console.log(Cat)
 }
 
-function randomModel(){
-    return modelArray[Math.floor(Math.random() * modelArray.length)]
+function randomModel () {
+  return modelArray[Math.floor(Math.random() * modelArray.length)]
 }
 
 function windowResized () {
