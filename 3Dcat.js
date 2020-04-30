@@ -51,9 +51,9 @@ class Particle {
 class Cat {
   constructor (x, y, model) {
     this.position = createVector(x, y)
-    // this.position.p5.x = x
-    // this.position.p5.y = y
-    // this.velocity = createVector(randomGaussian(0, 5), 0)
+    this.position.p5.x = x
+    this.position.p5.y = y
+    this.velocity = createVector(randomGaussian(0, 5), 0)
     this.model = model
   }
   update () {
@@ -69,30 +69,27 @@ class Cat {
     // } else {
     //   this.velocity.add(createVector(0, 1))
     // }
+    push()
+    // translate(Math.floor(Math.random() * mouseX/100), Math.floor(Math.random() * mouseY/100))
+    pop()
+    // push()
+    // translate(100,100)
+    // pop()
   }
 
   render () {
-    // normalMaterial() // For effect
+    rotate(180)
     rotateX(sin(frameCount * 0.01))
     rotateY(tan(frameCount * 0.01))
-    push()
-    pop()
-    translate(100, 100)
-    // texture(skin)
-    // textureMode(NORMAL)
-
-    push()
-    translate(mouseX, mouseY)
-    rotate(180)
+    normalMaterial() // For effect
+    // push()
     model(this.model)
-    pop()
-    // push()
-    // translate(
-    //   Math.floor(((Math.random() < 0.5 ? -1 : 1) * windowWidth) / 4),
-    //   Math.floor(((Math.random() < 0.5 ? -1 : 1) * windowHeight) / 8)
-    // )
-    // push()
-    // model(this.model, this.position.x, this.position.y, 100, 100)
+    translate(
+      Math.floor(Math.random() * mouseX * 2),
+      Math.floor(Math.random() * mouseY * 2)
+    )
+    texture(skin)
+    textureMode(NORMAL)
     // pop()
   }
 }
@@ -133,9 +130,7 @@ function draw () {
   for (cat of cats) {
     cat.update()
     cat.render()
-    // console.log(cat)
   }
-
   // rotateX(frameCount * 0.01)
   // rotateY(frameCount * 0.01)
   // // rotateZ(frameCount * 0.01)
